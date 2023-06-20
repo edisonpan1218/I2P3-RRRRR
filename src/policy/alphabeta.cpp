@@ -2,28 +2,31 @@
 #include <iostream>
 
 #include "../state/state.hpp"
-#include "./minimax.hpp"
+#include "./alphabeta.hpp"
 
-double find_minimax(int depth, bool player, State* state){
-  
+int find_alphabeta(int depth, bool player, State* state, int alpha, int beta){
   if(depth == 0) return state->evaluate();
   if(player){
-    double value = -1e9;
+    int value = -1e9;
     state->get_legal_actions();
     auto actions = state->legal_actions;
     for(auto  i : actions){
       State* tmp = state->next_state(i);
-      value = std::max(find_minimax(depth - 1, !player, tmp), value);
+      value = std::max(find_alphabeta(depth - 1, !player, tmp, alpha, beta), value);
+      alpha = std::max(alpha, value);
+      if (value >= beta) break;
     }
     return value;
   }
   else{
-    double value = 1e9;
+    int value = 1e9;
     state->get_legal_actions();
     auto actions = state->legal_actions;
     for(auto i : actions){
       State *tmp = state->next_state(i);
-      value = std::min(find_minimax(depth - 1, !player, tmp), value);
+      value = std::min(find_alphabeta(depth - 1, !player, tmp, alpha, beta), value);
+      beta = std::min(beta, value);
+      if(value <= alpha) break;
     }
     return value;
   }
@@ -36,16 +39,16 @@ double find_minimax(int depth, bool player, State* state){
  * @param depth You may need this for other policy
  * @return Move 
  */
-Move MiniMax::get_move(State *state, int depth){
+Move AlphaBeta::get_move(State *state, int depth){
   if(!state->legal_actions.size())
     state->get_legal_actions();
   
   auto actions = state->legal_actions;
-  double target = -1e9;
+  int target = -1e9 - 5;
   Move Max;
   for(int i = 0; i < actions.size(); i ++){
     State* tmp = state->next_state(actions[i]);
-    int v = find_minimax(depth, false, tmp);
+    int v = find_alphabeta(depth, false, tmp, -1e9, 1e9);
     if(v > target){
       Max = actions[i];
       target = v;

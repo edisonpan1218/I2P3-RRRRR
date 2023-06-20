@@ -11,11 +11,9 @@
  * 
  * @return int 
  */
-double State::evaluate(){
+int State::evaluate(){
   // [TODO] design your own evaluation function
   int point[7] = {0, 20, 60, 70, 80, 200, 1000000};
-  int Wsum = 0;
-  int Bsum = 0;
   int sum = 0;
   for(int i = 0; i < BOARD_H; i ++){
     for(int j = 0; j < BOARD_W; j ++){
