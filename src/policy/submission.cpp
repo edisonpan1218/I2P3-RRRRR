@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "../state/state.hpp"
-#include "./minimax.hpp"
+#include "./submission.hpp"
 
 double find_minimax(int depth, bool player, State* state){
   
