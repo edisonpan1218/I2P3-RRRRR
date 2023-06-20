@@ -13,7 +13,16 @@
  */
 int State::evaluate(){
   // [TODO] design your own evaluation function
-  return 0;
+  int point[7] = {0, 2, 6, 7, 8, 20, 100000}, sum = 0, mult = 1;
+  if(player == 1) mult = -1; 
+  for(int i = 0; i < BOARD_H; i ++){
+    for(int j = 0; j < BOARD_W; j ++){
+      int Wnow = this->board.board[0][i][j];
+      int Bnow = this->board.board[1][i][j];
+      sum += ((point[Wnow] - point[Bnow]) * mult);
+    }
+  }
+  return sum;
 }
 
 
