@@ -14,7 +14,7 @@ int find_alphabeta(int depth, bool player, State* state, int alpha, int beta){
       State* tmp = state->next_state(i);
       value = std::max(find_alphabeta(depth - 1, !player, tmp, alpha, beta), value);
       alpha = std::max(alpha, value);
-      if (value >= beta) break;
+      if (alpha >= beta) break;
     }
     return value;
   }
@@ -26,7 +26,7 @@ int find_alphabeta(int depth, bool player, State* state, int alpha, int beta){
       State *tmp = state->next_state(i);
       value = std::min(find_alphabeta(depth - 1, !player, tmp, alpha, beta), value);
       beta = std::min(beta, value);
-      if(value <= alpha) break;
+      if(beta <= alpha) break;
     }
     return value;
   }

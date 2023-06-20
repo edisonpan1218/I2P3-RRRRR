@@ -46,7 +46,7 @@ Move MiniMax::get_move(State *state, int depth){
   for(int i = 0; i < actions.size(); i ++){
     State* tmp = state->next_state(actions[i]);
     int v = find_minimax(depth, false, tmp);
-    if(v > target){
+    if(v >= target){
       Max = actions[i];
       target = v;
     }
