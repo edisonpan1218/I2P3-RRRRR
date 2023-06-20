@@ -5,14 +5,14 @@
 #include "./minimax.hpp"
 
 int find_minimax(int depth, bool player, State* state){
-  if(depth == 0) return state->evaluate();
+  if(depth == 0 || state->game_state != UNKNOWN) return state->evaluate();
   if(player){
-    int value = 0;
+    int value = -1e9;
     state->get_legal_actions();
     auto actions = state->legal_actions;
     for(int i = 0; i < actions.size(); i ++){
       State* tmp = state->next_state(actions[i]);
-      value = std::max(find_minimax(depth - 1, false, tmp), value);
+      value = std::max(find_minimax(depth - 1, !player, tmp), value);
     }
     return value;
   }
@@ -22,7 +22,7 @@ int find_minimax(int depth, bool player, State* state){
     auto actions = state->legal_actions;
     for(int i = 0; i < actions.size(); i ++){
       State *tmp = state->next_state(actions[i]);
-      value = std::min(find_minimax(depth - 1, true, tmp), value);
+      value = std::min(find_minimax(depth - 1, player, tmp), value);
     }
     return value;
   }
@@ -37,15 +37,20 @@ int find_minimax(int depth, bool player, State* state){
 Move MiniMax::get_move(State *state, int depth){
   if(!state->legal_actions.size())
     state->get_legal_actions();
-  /*
+  
   auto actions = state->legal_actions;
-  int target = find_minimax(depth, true, state);
+  int target = 1e9;
+  Move Max;
   for(int i = 0; i < actions.size(); i ++){
     State* tmp = state->next_state(actions[i]);
-    if(tmp->evaluate() == target){
-      return actions[i];
+    int v = find_minimax(depth, state->player, tmp);
+    if(v < target){
+      Max = actions[i];
+      target = v;
     }
-  }*/
+  }
+  return Max;
+  /*
   auto actions = state->legal_actions;
   Move Max;
   int max_sum = 1e9;
@@ -56,6 +61,6 @@ Move MiniMax::get_move(State *state, int depth){
       max_sum = tmp->evaluate();
     }
   }
-  return Max;
+  return Max;*/
 }
 
