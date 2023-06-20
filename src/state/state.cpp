@@ -11,15 +11,67 @@
  * 
  * @return int 
  */
-int State::evaluate(){
+double State::evaluate(){
   // [TODO] design your own evaluation function
-  int point[7] = {0, 2, 6, 7, 8, 20, 100000}, sum = 0, mult = 1;
-  if(player == 1) mult = -1; 
+  int point[7] = {0, 20, 60, 70, 80, 200, 1000000};
+  int Wsum = 0;
+  int Bsum = 0;
+  int sum = 0;
   for(int i = 0; i < BOARD_H; i ++){
     for(int j = 0; j < BOARD_W; j ++){
       int Wnow = this->board.board[0][i][j];
       int Bnow = this->board.board[1][i][j];
-      sum += ((point[Wnow] - point[Bnow]) * mult);
+      /*
+      switch (Wnow)
+      {
+      case 1:
+        if(player == 0){
+          sum += (4 - i ) * 50;
+        }
+        else sum += (i - 1) * 50;
+        break;
+      case 2:
+        if((i + 1 < BOARD_H && board.board[player][i + 1][j] == 0) || (i - 1 > player && board.board[player][i - 1][j] == 0)) sum += 2;
+        if((j + 1 < BOARD_W && board.board[player][i][j + 1] == 0) || (j - 1> 0 && board.board[player][i][j - 1] == 0)) sum += 2;
+        break;
+      case 3:
+        if(i + 2 < BOARD_H && j + 1 < BOARD_W && board.board[player][i + 2][j + 1] == 0) sum += 1;
+        if(i + 2 < BOARD_H && j - 1 > 0 && board.board[player][i + 2][j - 1] == 0) sum += 1;
+        if(i - 2 > 0 && j + 1 < BOARD_W && board.board[player][i - 2][j + 1] == 0) sum += 1;
+        if(i - 2 > 0 && j - 1 > 0 && board.board[player][i - 2][j - 1] == 0) sum += 1;
+
+        if(i + 2 < BOARD_H && j + 1 < BOARD_W && board.board[player][i + 1][j + 2] == 0) sum += 1;
+        if(i - 1 > 0 && j + 2 < BOARD_W && board.board[player][i - 1][j + 2] == 0) sum += 1;
+        if(i + 1 < BOARD_H && j - 2 > 0 && board.board[player][i + 1][j - 2] == 0) sum += 1;
+        if(i - 1 < 0 && j - 2 < 0 && board.board[player][i - 1][j - 2] == 0) sum += 1;
+        break;
+      case 4:
+        if(i + 1 < BOARD_H && j + 1 < BOARD_W && board.board[player][i + 1][j + 1] == 0) sum += 2;
+        if(i + 1 < BOARD_H && j - 1 > 0 && board.board[player][i + 1][j - 1] == 0) sum += 2;
+        if(i - 1 > 0 && j + 1 < BOARD_W && board.board[player][i - 1][j + 1] == 0) sum += 2;
+        if(i - 1 > 0 && j - 1 > 0 && board.board[player][i - 1][j - 1] == 0) sum += 2;
+        break;
+      case 5:
+        if(i + 1 < BOARD_H && j + 1 < BOARD_W && board.board[player][i + 1][j + 1] == 0) sum += 20;
+        if(i + 1 < BOARD_H && j - 1 > 0 && board.board[player][i + 1][j - 1] == 0) sum += 20;
+        if(i - 1 > 0 && j + 1 < BOARD_W && board.board[player][i - 1][j + 1] == 0) sum += 20;
+        if(i - 1 > 0 && j - 1 > 0 && board.board[player][i - 1][j - 1] == 0) sum += 20;
+        if((i + 1 < BOARD_H && board.board[player][i + 1][j] == 0) || (i - 1 > 0 && board.board[player][i - 1][j] == 0)) sum += 40;
+        if((j + 1 < BOARD_W && board.board[player][i][j + 1] == 0) || (j - 1> 0 && board.board[player][i][j - 1] == 0)) sum += 40;
+        break;
+      case 6:
+        if(i + 1 < BOARD_H && j + 1 < BOARD_W && board.board[player][i + 1][j + 1] == 0) sum += 2;
+        if(i + 1 < BOARD_H && j - 1 > 0 && board.board[player][i + 1][j - 1] == 0) sum += 2;
+        if(i - 1 > 0 && j + 1 < BOARD_W && board.board[player][i - 1][j + 1] == 0) sum += 2;
+        if(i - 1 > 0 && j - 1 > 0 && board.board[player][i - 1][j - 1] == 0) sum += 2;
+        if((i + 1 < BOARD_H && board.board[player][i + 1][j] == 0) || (i - 1 > 0 && board.board[player][i - 1][j] == 0)) sum += 4;
+        if((j + 1 < BOARD_W && board.board[player][i][j + 1] == 0) || (j - 1> 0 && board.board[player][i][j - 1] == 0)) sum += 4;
+      default:
+        break;
+      }*/
+      if(player == 0)
+        sum += point[Wnow] - point[Bnow];
+      else sum += point[Bnow] - point[Wnow];
     }
   }
   return sum;
